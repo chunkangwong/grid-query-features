@@ -6,12 +6,12 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
     dts({
-      include: [path.resolve(__dirname, "src/hooks/useGridQueryFeatures.ts")],
+      include: [path.resolve(__dirname, "src/useGridQueryFeatures.ts")],
     }),
   ],
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/hooks/useGridQueryFeatures.ts"),
+      entry: path.resolve(__dirname, "src/useGridQueryFeatures.ts"),
       name: "useGridQueryFeatures",
       fileName: (format) => `useGridQueryFeatures.${format}.js`,
     },
