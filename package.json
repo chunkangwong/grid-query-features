@@ -21,6 +21,7 @@
     "type": "git",
     "url": "https://github.com/chunkangwong/grid-query-features"
   },
+  "license": "MIT",
   "main": "./dist/useGridQueryFeatures.umd.js",
   "types": "./dist/useGridQueryFeatures.d.ts",
   "module": "./dist/useGridQueryFeatures.es.js",
