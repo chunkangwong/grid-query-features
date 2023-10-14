@@ -106,22 +106,22 @@ const { featureSet, objectIds, error, isLoading, refetch } =
 
 ### Parameters
 
-- `featureLayer: FeatureLayer`
+- `featureLayer:` [`FeatureLayer`](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html)
 
   - **Required**
   - The feature layer to query features from.
 
-- `paginationModel: GridPaginationModel`
+- `paginationModel:` [`GridPaginationModel`](https://mui.com/x/api/data-grid/data-grid/#DataGrid-prop-paginationModel)
 
   - **Required**
   - The pagination model from MUI DataGrid. It will be converted to a `start` and `num` query props and passed to the feature layer query.
 
-- `sortModel: GridSortModel`
+- `sortModel:` [`GridSortModel`](https://mui.com/x/api/data-grid/data-grid/#DataGrid-prop-sortModel)
 
   - **Required**
   - The sort model from MUI DataGrid. It will be converted to a `orderByFields` query prop and passed to the feature layer query.
 
-- `filterModel: GridFilterModel`
+- `filterModel:` [`GridFilterModel`](https://mui.com/x/api/data-grid/data-grid/#DataGrid-prop-filterModel)
 
   - Optional
   - The filter model from MUI DataGrid. It will be converted to a SQL where clause and passed to the feature layer query.
@@ -130,7 +130,7 @@ const { featureSet, objectIds, error, isLoading, refetch } =
 
 ### Returns
 
-- `featureSet: FeatureSet | null`
+- `featureSet:` [`FeatureSet`](<(https://developers.arcgis.com/javascript/latest/api-reference/esri-rest-support-FeatureSet.html)>) `| null`
 
   - Default to `null`.
   - The feature set returned from the feature layer query.
@@ -149,6 +149,6 @@ const { featureSet, objectIds, error, isLoading, refetch } =
   - Default to `false`.
   - Whether the feature layer query is loading.
 
-- `refetch: () => Promise<{ objectIds: number[]; featureSet: FeatureSet } | undefined>`
+- `refetch: () => Promise<{ objectIds: number[]; featureSet: `[`FeatureSet`](<(https://developers.arcgis.com/javascript/latest/api-reference/esri-rest-support-FeatureSet.html)>)` } | undefined>`
 
   - A function to refetch the feature layer query with the current pagination, sorting, and filtering models. It returns object ids and feature set if the query is successful, otherwise `undefined`.
