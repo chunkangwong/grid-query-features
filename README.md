@@ -106,6 +106,8 @@ const { featureSet, objectIds, error, isLoading, refetch } =
 
 ### Parameters
 
+Query will be triggered when any of the following parameters change.
+
 - `featureLayer:` [`FeatureLayer`](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html)
 
   - **Required**
