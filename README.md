@@ -130,7 +130,7 @@ const { featureSet, objectIds, error, isLoading, refetch } =
 
 ### Returns
 
-- `featureSet:` [`FeatureSet`](<(https://developers.arcgis.com/javascript/latest/api-reference/esri-rest-support-FeatureSet.html)>) `| null`
+- `featureSet: FeatureSet | null`
 
   - Default to `null`.
   - The feature set returned from the feature layer query.
@@ -149,6 +149,6 @@ const { featureSet, objectIds, error, isLoading, refetch } =
   - Default to `false`.
   - Whether the feature layer query is loading.
 
-- `refetch: () => Promise<{ objectIds: number[]; featureSet: `[`FeatureSet`](<(https://developers.arcgis.com/javascript/latest/api-reference/esri-rest-support-FeatureSet.html)>)` } | undefined>`
+- `refetch: () => Promise<{ objectIds: number[]; featureSet: FeatureSet } | undefined>`
 
   - A function to refetch the feature layer query with the current pagination, sorting, and filtering models. It returns object ids and feature set if the query is successful, otherwise `undefined`.
