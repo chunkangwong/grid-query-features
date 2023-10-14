@@ -1,6 +1,5 @@
 {
-  "name": "usegridqueryfeatures",
-  "private": true,
+  "name": "@chunkangwong/usegridqueryfeatures",
   "version": "0.0.0",
   "type": "module",
   "files": [

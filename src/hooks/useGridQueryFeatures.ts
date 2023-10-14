@@ -1,3 +1,6 @@
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import Field from "@arcgis/core/layers/support/Field";
+import FeatureSet from "@arcgis/core/rest/support/FeatureSet";
 import {
   GridFilterItem,
   GridFilterModel,
@@ -7,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 
 type UseGridQueryFeaturesProps = {
-  featureLayer: __esri.FeatureLayer;
+  featureLayer: FeatureLayer;
   paginationModel: GridPaginationModel;
   sortModel: GridSortModel;
   filterModel?: GridFilterModel;
@@ -38,7 +41,7 @@ const operatorMap = {
 type GridOperator = keyof typeof operatorMap;
 type EsriOperator = (typeof operatorMap)[GridOperator];
 
-const isNumberField = (esriType: __esri.Field["type"]) => {
+const isNumberField = (esriType: Field["type"]) => {
   return (
     esriType === "double" ||
     esriType === "integer" ||
@@ -49,7 +52,7 @@ const isNumberField = (esriType: __esri.Field["type"]) => {
   );
 };
 
-const getFormattedValue = (esriType: __esri.Field["type"], value: any) => {
+const getFormattedValue = (esriType: Field["type"], value: any) => {
   if (esriType === "date") {
     return `Date '${new Date(value).toISOString().split("T")[0]}'`;
   } else if (isNumberField(esriType)) {
@@ -58,7 +61,7 @@ const getFormattedValue = (esriType: __esri.Field["type"], value: any) => {
   return `'${value}'`;
 };
 
-const getInFormattedValue = (esriType: __esri.Field["type"], values: any[]) => {
+const getInFormattedValue = (esriType: Field["type"], values: any[]) => {
   if (isNumberField(esriType)) {
     return `(${values.join(",")})`;
   }
@@ -75,7 +78,7 @@ const getLikeFormattedValue = (gridOperator: GridOperator, value: any) => {
 };
 
 const getExpression = (
-  esriType: __esri.Field["type"],
+  esriType: Field["type"],
   gridFilterItem: GridFilterItem
 ) => {
   const { field, operator, value } = gridFilterItem;
@@ -97,15 +100,12 @@ const getExpression = (
   return `${field} ${esriOperatorValue} ${getFormattedValue(esriType, value)}`;
 };
 
-const getWhereClause = (
-  fields: __esri.Field[],
-  filterModel?: GridFilterModel
-) => {
+const getWhereClause = (fields: Field[], filterModel?: GridFilterModel) => {
   if (filterModel && filterModel.items.length > 0) {
     const fieldTypeMap = fields.reduce((acc, field) => {
       acc[field.name] = field.type;
       return acc;
-    }, {} as Record<string, __esri.Field["type"]>);
+    }, {} as Record<string, Field["type"]>);
     const expressions = filterModel.items.map((gridFilterItem) => {
       return getExpression(fieldTypeMap[gridFilterItem.field], gridFilterItem);
     });
@@ -117,17 +117,17 @@ const getWhereClause = (
 const useGridQueryFeatures = ({
   featureLayer,
   filterModel,
-  paginationModel: paginationMode,
+  paginationModel,
   sortModel,
 }: UseGridQueryFeaturesProps) => {
-  const [featureSet, setFeatureSet] = useState<__esri.FeatureSet | null>(null);
+  const [featureSet, setFeatureSet] = useState<FeatureSet | null>(null);
   const [objectIds, setObjectIds] = useState<number[] | null>(null);
   const [error, setError] = useState<unknown>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     refetch();
-  }, [featureLayer, filterModel, paginationMode, sortModel]);
+  }, [featureLayer, filterModel, paginationModel, sortModel]);
 
   const refetch = async () => {
     setIsLoading(true);
@@ -143,8 +143,8 @@ const useGridQueryFeatures = ({
         where: where,
       });
       const featureSet = await featureLayer.queryFeatures({
-        start: paginationMode.page * paginationMode.pageSize,
-        num: paginationMode.pageSize,
+        start: paginationModel.page * paginationModel.pageSize,
+        num: paginationModel.pageSize,
         where: where,
         returnGeometry: true,
         orderByFields: orderByFields,
@@ -152,6 +152,10 @@ const useGridQueryFeatures = ({
       });
       setObjectIds(objectIds);
       setFeatureSet(featureSet);
+      return {
+        objectIds,
+        featureSet,
+      };
     } catch (err) {
       setError(err);
     } finally {
