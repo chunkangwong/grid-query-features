@@ -2,7 +2,6 @@ import {
   DataGrid,
   GridColDef,
   GridFilterModel,
-  GridInputRowSelectionModel,
   GridPaginationModel,
   GridSortModel,
 } from "@mui/x-data-grid";
@@ -49,8 +48,6 @@ function App() {
   });
   const [sortModel, setSortModel] = useState<GridSortModel>([]);
   const [filterModel, setFilterModel] = useState<GridFilterModel>();
-  const [rowSelectionModel, setRowSelectionModel] =
-    useState<GridInputRowSelectionModel>([]);
   const { isLoading, featureSet, objectIds } = useGridQueryFeatures({
     featureLayer,
     paginationModel,
@@ -61,12 +58,6 @@ function App() {
   useEffect(() => {
     view.container = mapRef.current!;
   }, []);
-
-  const handleRowSelectionModelChange = (
-    newRowSelectionModel: GridInputRowSelectionModel
-  ) => {
-    setRowSelectionModel(newRowSelectionModel);
-  };
 
   return (
     <div className="App">
@@ -81,16 +72,17 @@ function App() {
           pagination
           paginationMode="server"
           paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
+          onPaginationModelChange={(newPaginationModel) =>
+            setPaginationModel(newPaginationModel)
+          }
           sortingMode="server"
           sortModel={sortModel}
-          onSortModelChange={setSortModel}
+          onSortModelChange={(newSortModel) => setSortModel(newSortModel)}
           filterMode="server"
           filterModel={filterModel}
-          onFilterModelChange={setFilterModel}
-          checkboxSelection
-          rowSelectionModel={rowSelectionModel}
-          onRowSelectionModelChange={handleRowSelectionModelChange}
+          onFilterModelChange={(newFilterModel) =>
+            setFilterModel(newFilterModel)
+          }
           loading={isLoading}
           slots={{
             pagination: CustomPagination,
