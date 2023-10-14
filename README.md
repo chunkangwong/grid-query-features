@@ -19,7 +19,8 @@ import {
   GridPaginationModel,
   GridSortModel,
 } from "@mui/x-data-grid";
-import { useGridQueryFeatures } from "@chunkangwong/grid-query-features";
+import useGridQueryFeatures from "@chunkangwong/grid-query-features";
+import { useState } from "react";
 
 const featureLayer = new FeatureLayer({
   url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
@@ -58,6 +59,34 @@ const App = () => {
       filterModel={filterModel}
       onFilterModelChange={(newFilterModel) => setFilterModel(newFilterModel)}
       loading={isLoading}
+      columns={[
+        {
+          field: "FID",
+          headerName: "FID",
+          type: "number",
+          width: 150,
+        },
+        {
+          field: "Tree_ID",
+          headerName: "Tree_ID",
+          type: "number",
+          width: 150,
+        },
+        {
+          field: "Status",
+          headerName: "Status",
+          width: 150,
+        },
+        {
+          field: "Collected",
+          headerName: "Collected",
+          width: 300,
+          type: "date",
+          valueFormatter: ({ value }) => {
+            return new Date(value).toLocaleDateString();
+          },
+        },
+      ]}
     />
   );
 };
