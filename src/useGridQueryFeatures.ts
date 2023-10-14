@@ -1,6 +1,6 @@
-import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
-import Field from "@arcgis/core/layers/support/Field";
-import FeatureSet from "@arcgis/core/rest/support/FeatureSet";
+import type FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import type Field from "@arcgis/core/layers/support/Field";
+import type FeatureSet from "@arcgis/core/rest/support/FeatureSet";
 import {
   GridFilterItem,
   GridFilterModel,
